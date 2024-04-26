@@ -1,0 +1,18 @@
+---
+- name: Run Nginx container
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Ensure Docker image is pulled
+      docker_image:
+        name: nginx
+        state: present
+
+    - name: Launch Nginx container
+      docker_container:
+        name: my-nginx
+        image: nginx
+        ports:
+          - "80:80"  # Map container port 80 to host port 80
+        restart: always  # Restart container on system reboot
